@@ -1,0 +1,21 @@
+.Todo{
+  background-color: red;
+}
+
+.Doing{
+background-color: orange;
+}
+
+.Done{
+  background-color: green;
+}
+
+table{
+  border: 1px solid black;
+}
+
+
+td{
+  border: 1px solid black;
+  padding: 10px 5px ;
+}
