@@ -30,8 +30,25 @@ export const TaskProvider = ({ children }) => {
 
     }, [])
 
-    const addTask = () => {
-        console.log("Task aggiunta")
+    const addTask = async ({title, description, status}) => {
+
+        try{
+            const response = await axios.post(apiUrl, {
+                title,
+                description,
+                status,
+            })
+            const data = response.data
+            if(data.success) {
+                setTasks((curr) => [...curr, data.task])
+                console.log("Task aggiunta con successo:" , data)
+            } else{
+                throw new Error(data.message)
+            }
+        }
+        catch(error){
+            console.log(error || "errore nella creazione della task")
+        }
     }
 
     const removeTask = () => {

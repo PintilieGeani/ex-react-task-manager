@@ -1,22 +1,33 @@
 import { useEffect, useRef, useState } from "react"
+import { useTasks } from "../context/Taskcontext"
 
 export default function AddTask() {
 
-    const [nome, setnome] = useState("")
+    const [nome, setNome] = useState("")
     const [nomeValid, setNomeValid] = useState(false)
     const description = useRef(null)
     const status = useRef(null)
+    const{addTask} = useTasks()
 
-    const handleForm = (e) => {
+    const handleForm = async (e) => {
         e.preventDefault()
         if(nomeValid){
             const task = {
-                Nome: nome,
-                Descrizione: description.current.value,
-                Status: status.current.value
+                title: nome,
+                description: description.current.value,
+                status: status.current.value
             }
-            console.log(task)
-        }else{
+            try{
+                await addTask(task)
+                setNome("")
+                description.current.value = ""
+                status.current.value = ""
+            }
+            catch(error){console.error("errore qua dentro")}
+
+        }
+        
+        else{
             console.error("Nome non valido")
         }
     }
@@ -45,7 +56,7 @@ export default function AddTask() {
                 <input
                     type="text"
                     value={nome}
-                    onChange={(e) => setnome(e.target.value)}
+                    onChange={(e) => setNome(e.target.value)}
                     placeholder="Titolo della task"
                 />
                 {nome.length !== 0 && <p>{ nomeValid ? "valido": "non valido" }</p>}
