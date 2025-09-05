@@ -28,6 +28,7 @@ export default function AddTask() {
         }
         
         else{
+            alert("Completa tutti i campi obligatori")
             console.error("Nome non valido")
         }
     }

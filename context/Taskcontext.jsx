@@ -41,6 +41,7 @@ export const TaskProvider = ({ children }) => {
             const data = response.data
             if(data.success) {
                 setTasks((curr) => [...curr, data.task])
+                alert("Dati mandati con successo")
                 console.log("Task aggiunta con successo:" , data)
             } else{
                 throw new Error(data.message)
