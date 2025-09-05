@@ -6,7 +6,7 @@ const TaskRow = React.memo(function task({ tasks }) {
     return tasks.map((task) => {
         return (
             <tr key={task.id}>
-                <td>{task.title}</td>
+                <td><a href={`/task/${task.id}`}>{task.title}</a></td>
                 <td className={`${task.status.replaceAll(" ", "")}`}>{task.status}</td>
                 <td>{task.createdAt}</td>
             </tr>
