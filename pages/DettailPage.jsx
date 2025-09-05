@@ -4,11 +4,7 @@ import { useTasks } from "../context/Taskcontext"
 export default function DettailPage() {
     const { tasks, removeTask } = useTasks()
     const { id } = useParams()
-    console.log(tasks)
-    console.log(id)
     const task = tasks.find((curtask) => curtask.id === parseInt(id))
-    console.log(task)
-
     return (
         <>
             {task && 
