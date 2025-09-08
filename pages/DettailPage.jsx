@@ -28,7 +28,7 @@ export default function DettailPage() {
                     <h2>Nome della Task: {task.title}</h2>
                     <p>Status della Task: {task.status}</p>
                     <p>Descrizione: {task.description}</p>
-                    <p>Creato il:{task.createdAt}</p>
+                    <p>Creato il: {new Date(task.createdAt).toLocaleDateString("it-IT")}</p>
                 </div>}
             <div>
                 <button onClick={() => setShowModal(true)}>Elimina Task</button>

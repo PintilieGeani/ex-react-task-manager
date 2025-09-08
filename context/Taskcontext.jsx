@@ -98,6 +98,22 @@ export const TaskProvider = ({ children }) => {
         }
     }
 
+    const removeSelection = async (selected) => {
+        try {
+            await Promise.all(selected.map((id) => axios.delete(`${apiUrl}/${id}`)))
+            console.log("le task sono state eliminate con successo", selected)
+
+            // Reset delle task dopo eliminazione
+            setTasks((cur) => cur.filter((elem) => !selected.includes(elem.id)))
+            alert(`Le task con id: ${selected} sono state eliminate con successo`)
+        }
+        catch (error) {
+            console.error("Errore nella esecuzione della fatch", error)
+            alert(error.message)
+        }
+
+    }
+
 
     return (
         <TaskContext.Provider
@@ -108,6 +124,7 @@ export const TaskProvider = ({ children }) => {
                 addTask,
                 removeTask,
                 updateTask,
+                removeSelection
             }}
         >
             {children}
