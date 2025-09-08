@@ -19,6 +19,13 @@ export default function TaskList() {
     const [sortBy, setSortBy] = useState("createdAt")
     const [sortOrder, setSortOrder] = useState(1)
 
+    //la query iniziale
+    const [query, setQuery] = useState("")
+    // query dopo il debounce
+    const [debouncedQuery, setDebouncedQuery] = useState(query)
+
+
+    //Ordina, crescente o decrescente se la colonna è  selezionata
     const handleSort = (column) => {
         if (sortBy === column) {
             setSortOrder((cur) => -cur)
@@ -28,6 +35,20 @@ export default function TaskList() {
         }
     }
 
+
+    // Setto il debounce della query e la trasformo in debouncequery da usare nella useMemo
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedQuery(query)
+        }, 300) // 300ms di debounce
+
+        return () => {
+            clearTimeout(handler)
+        }
+    }, [query])
+
+
+    //Funzione sia per ordinare sia per filtrare dove uso debounceQuery per applicare il ritardo nella ricerca.
     const sortedTasks = useMemo(() => {
         const statusOrder = {
             "To do": 0,
@@ -35,7 +56,11 @@ export default function TaskList() {
             "Done": 2
         }
 
-        const sorted = [...tasks].sort((a, b) => {
+        const filtered = debouncedQuery
+            ? tasks.filter(elem => elem.title.toLowerCase().includes(debouncedQuery.toLowerCase()))
+            : tasks
+
+        const sorted = [...filtered].sort((a, b) => {
             let compare = 0;
 
             if (sortBy === "title") {
@@ -51,14 +76,18 @@ export default function TaskList() {
 
         return sorted;
 
-    }, [tasks, sortBy, sortOrder])
+    }, [tasks, sortBy, sortOrder, debouncedQuery])
 
 
-
-    console.log(tasks)
 
     return (
         <>
+            <input
+                type="text"
+                value={query}
+                placeholder="Cerca..."
+                onChange={(e) => setQuery(e.target.value)}
+            />
             <h1>Le mie task</h1>
             <table>
                 <thead>
