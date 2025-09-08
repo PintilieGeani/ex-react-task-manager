@@ -1,5 +1,5 @@
 import { useTasks } from "../context/Taskcontext.jsx"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 
 // Ottimizzo il render delle task con un React.memo 
 const TaskRow = React.memo(function task({ tasks }) {
@@ -16,6 +16,44 @@ const TaskRow = React.memo(function task({ tasks }) {
 export default function TaskList() {
     // Recupero delle task dal content
     const { tasks, loading, setTasks, addTask, removeTask, updateTask } = useTasks()
+    const [sortBy, setSortBy] = useState("createdAt")
+    const [sortOrder, setSortOrder] = useState(1)
+
+    const handleSort = (column) => {
+        if (sortBy === column) {
+            setSortOrder((cur) => -cur)
+        } else {
+            setSortBy(column);
+            setSortOrder(1)
+        }
+    }
+
+    const sortedTasks = useMemo(() => {
+        const statusOrder = {
+            "To do": 0,
+            "Doing": 1,
+            "Done": 2
+        }
+
+        const sorted = [...tasks].sort((a, b) => {
+            let compare = 0;
+
+            if (sortBy === "title") {
+                compare = a.title.localeCompare(b.title);
+            } else if (sortBy === "status") {
+                compare = statusOrder[a.status] - statusOrder[b.status];
+            } else if (sortBy === "createdAt") {
+                compare = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            }
+
+            return compare * sortOrder
+        })
+
+        return sorted;
+
+    }, [tasks, sortBy, sortOrder])
+
+
 
     console.log(tasks)
 
@@ -25,14 +63,14 @@ export default function TaskList() {
             <table>
                 <thead>
                     <tr>
-                        <th>Task:</th>
-                        <th>Stato:</th>
-                        <th>Data di creazione:</th>
+                        <th onClick={() => handleSort("title")}>Task:</th>
+                        <th onClick={() => handleSort("status")}>Stato:</th>
+                        <th onClick={() => handleSort("createdAt")}>Data di creazione:</th>
                     </tr>
 
                 </thead>
                 <tbody>
-                    <TaskRow tasks={tasks} />
+                    <TaskRow tasks={sortedTasks} />
                 </tbody>
             </table>
 
