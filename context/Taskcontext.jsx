@@ -1,14 +1,14 @@
-import { Children, createContext, useContext, useEffect, useState, } from "react";
+import { Children, createContext, useContext, useEffect, useReducer, useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { taskReducer, initialState } from "../customHooks/taskReducer";
 
 const TaskContext = createContext()
 
 
 export const TaskProvider = ({ children }) => {
     // Stati
-    const [tasks, setTasks] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [state, dispatch] = useReducer(taskReducer, initialState)
     const navigate = useNavigate()
 
     // Url del mio back-end
@@ -19,13 +19,10 @@ export const TaskProvider = ({ children }) => {
         const fetchTask = async () => {
             try {
                 const response = await axios.get(apiUrl)
-                setTasks(response.data)
+                dispatch({ type: "LOAD_TASKS", payload: response.data })
             }
             catch (error) {
                 console.error("Errore nel recupero delle Task", error)
-            }
-            finally {
-                setLoading(false)
             }
         }
 
@@ -35,6 +32,14 @@ export const TaskProvider = ({ children }) => {
 
     const addTask = async ({ title, description, status }) => {
 
+        // Controllo la presenza di una task con lo stesso titolo
+        const presente = state.tasks.some((elem) => elem.title.toLowerCase() === title.toLowerCase())
+        if (presente) {
+            alert("Esiste già una task con questo titolo");
+            return;
+        }
+
+        // Procedo con la chiamata post controllo
         try {
             const response = await axios.post(apiUrl, {
                 title,
@@ -43,7 +48,7 @@ export const TaskProvider = ({ children }) => {
             })
             const data = response.data
             if (data.success) {
-                setTasks((curr) => [...curr, data.task])
+                dispatch({ type: "ADD_TASK", payload: data.task })
                 alert("Dati mandati con successo")
                 console.log("Task aggiunta con successo:", data)
             } else {
@@ -60,9 +65,7 @@ export const TaskProvider = ({ children }) => {
             const response = await axios.delete(`${apiUrl}/${taskId}`)
             console.log("Task Eliminata", response.data)
             if (response.data.success) {
-                setTasks((cur) =>
-                    cur.filter((elem) => elem.id !== taskId)
-                )
+                dispatch({ type: "REMOVE_TASK", payload: taskId })
                 alert("Task Eliminata")
                 navigate("/")
             }
@@ -77,14 +80,20 @@ export const TaskProvider = ({ children }) => {
     }
 
     const updateTask = async (task) => {
+
+        // Controllo se esiste già il titolo escludendo se stessa.
+        const presente = state.tasks.some((elem) => elem.title.toLowerCase === task.title.toLowerCase && elem.id !== task.id)
+        if(presente){
+            alert("Esiste già una task con questo titolo")
+            return
+        }
+
+        // Procedo con la chiamata post controllo
         try {
             const response = await axios.put(`${apiUrl}/${task.id}`, task)
             if (response.data.success) {
                 // aggiorno i dati anche per lo stato locale
-                setTasks((cur) => cur.map((elem) => (
-                    elem.id === task.id ? response.data.task : elem
-                )))
-
+                dispatch({ type: "UPDATE_TASK", payload: response.data.task })
                 console.log("I dati sono stati aggiornati", response.data.task);
                 alert("Dati aggiornati con successo")
                 navigate("/")
@@ -104,7 +113,7 @@ export const TaskProvider = ({ children }) => {
             console.log("le task sono state eliminate con successo", selected)
 
             // Reset delle task dopo eliminazione
-            setTasks((cur) => cur.filter((elem) => !selected.includes(elem.id)))
+            dispatch({ type: "REMOVE_MULTIPLE_TASKS", payload: selected })
             alert(`Le task con id: ${selected} sono state eliminate con successo`)
         }
         catch (error) {
@@ -118,9 +127,8 @@ export const TaskProvider = ({ children }) => {
     return (
         <TaskContext.Provider
             value={{
-                tasks,
-                setTasks,
-                loading,
+                tasks: state.tasks,
+                loading: state.loading,
                 addTask,
                 removeTask,
                 updateTask,

@@ -4,13 +4,18 @@ import { Outlet } from "react-router-dom"
 
 
 export default function Layout() {
-    return(
-        <>
-        <AppHeader/>
-        <main>
-            <Outlet />
-        </main>
-        <AppFooter/>
-        </>
+    return (
+        <div className="app-wrapper">
+            <AppHeader />
+            <main>
+                <Outlet />
+            </main>
+            <AppFooter />
+
+            {/* Character in basso a destra */}
+            <div className="character">
+                <img src="/character2.png" alt="" />
+            </div>
+        </div>
     )
 }

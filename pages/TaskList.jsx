@@ -11,13 +11,18 @@ const TaskRow = React.memo(function task({ tasks, selectedTasks, onToggle }) {
 
         return (
             <tr key={task.id}>
-                <td><a href={`/task/${task.id}`}>{task.title}</a></td>
-                <td className={`${task.status.replaceAll(" ", "")}`}>{task.status}</td>
-                <td>{new Date(task.createdAt).toLocaleDateString("it-IT")}</td>
-                <td><input
-                    checked={isChecked}
-                    onChange={() => onToggle(task.id)}
-                    type="checkbox" /></td>
+                <td><a href={`/task/${task.id}`}><img src="/bibbia.svg" alt="bibbia" /><span>{task.title}</span></a></td>
+                <td className={`${task.status.replaceAll(" ", "")}`}> <img src="/teschio-brutto.svg" alt="teschio" /> <span>{task.status}</span></td>
+                <td><img src="/asce.svg" alt="asce" /> <span>{new Date(task.createdAt).toLocaleDateString("it-IT")}</span></td>
+                <td>
+                    <label className="custom-checkbox">
+                        <input
+                            checked={isChecked}
+                            onChange={() => onToggle(task.id)}
+                            type="checkbox" />
+                            <span className="checkbox-img"></span>
+                    </label>
+                </td>
             </tr>
         )
     })
@@ -111,45 +116,60 @@ export default function TaskList() {
     const handleSelection = (ogg) => {
         removeSelection(ogg)
         setSelectedTasks([])
-        
+
     }
-
-
-console.log(selectedTasks)
 
 
 
     return (
         <>
-            <input
-                type="text"
-                value={query}
-                placeholder="Cerca..."
-                onChange={(e) => setQuery(e.target.value)}
-            />
-            <h1>Le mie task</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th onClick={() => handleSort("title")}>Task:</th>
-                        <th onClick={() => handleSort("status")}>Stato:</th>
-                        <th onClick={() => handleSort("createdAt")}>Data di creazione:</th>
-                    </tr>
+            <div className="impaginazione">
+                <h1>To-Die List</h1>
+                <h3>Per non dimenticare nemmeno un rituale oscuro</h3>
+                <input
+                    className="ricerca"
+                    type="text"
+                    value={query}
+                    placeholder="Cerca..."
+                    onChange={(e) => setQuery(e.target.value)}
+                />
 
-                </thead>
-                <tbody>
-                    <TaskRow
-                        tasks={sortedTasks}
-                        selectedTasks = {selectedTasks}
-                        onToggle={handleToggle}
-                    />
-                </tbody>
-            </table>
+                <div className="custom-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th onClick={() => handleSort("title")}>Voce del Testamento</th>
+                                <th onClick={() => handleSort("status")}>Fase di Putrefazione</th>
+                                <th onClick={() => handleSort("createdAt")}>Ultima Volontà</th>
+                                <th >Promesso all’Oltretomba</th>
+                            </tr>
 
-            {selectedTasks.length > 0 &&
-                <div>
-                    <button onClick={() => handleSelection(selectedTasks)}>Elimina Selezione</button>
-                </div>}
+                        </thead>
+                    </table>
+                </div>
+
+                <div className="table-body-wrapper">
+                    <table className="custom-table ">
+                        <tbody >
+                            <TaskRow
+                                tasks={sortedTasks}
+                                selectedTasks={selectedTasks}
+                                onToggle={handleToggle}
+                            />
+                        </tbody>
+                    </table>
+                </div>
+                {
+                    selectedTasks.length > 0 &&
+                    <div>
+                        <button onClick={() => handleSelection(selectedTasks)}>Elimina Selezione</button>
+                    </div>
+                }
+            </div >
+
+
+
+
         </>
     )
 }

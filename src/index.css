@@ -1,21 +1,238 @@
-.Todo{
-  background-color: red;
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Beth+Ellen&family=Butcherman&family=Cinzel+Decorative:wght@400;700;900&family=Creepster&family=Eater&family=Frijole&family=Luckiest+Guy&family=Nosifer&family=Quintessential&family=Ranchers&display=swap");
+
+
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
 }
 
-.Doing{
-background-color: orange;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-.Done{
-  background-color: green;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  color: white;
 }
 
-table{
-  border: 1px solid black;
+main {
+  font-family: "Quintessential", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+header,
+footer {
+  height: 15vh;
+  flex-shrink: 0;
+  background-color: transparent;
+  font-family: "Nosifer", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.Todo {
+  color: #8C2F39;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.Doing {
+  color: #D2AE4B;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.Done {
+  color: #3F6D4C;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 
-td{
-  border: 1px solid black;
-  padding: 10px 5px ;
+
+
+/* IMPAGINAZIONE */
+.impaginazione {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: center;
+  margin: 0 auto;
+  min-height: 70vh;
+  position: relative;
+  z-index: 10;
+}
+
+.character {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+}
+
+
+.character img {
+  height: 90vh;
+  transform: translate(34%);
+  /* Sposta l'immagine più in basso e a destra */
+  filter: brightness(65%);
+
+}
+
+
+
+
+.app-wrapper {
+  min-height: 100vh;
+  background: url('/bg3.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+
+
+
+/* HEADER */
+
+.header {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+nav {
+  margin: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 30px;
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  background: rgba(89, 89, 89, 0.4);
+  backdrop-filter: blur(10px);
+  height: 80%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+/* MAIN */
+h1 {
+  font-family: "Nosifer", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  color: #8C2F39;
+
+}
+
+h3 {
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 600;
+  font-style: normal;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #8C2F39;
+}
+
+table {
+  background: rgba(89, 89, 89, 0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  border-collapse: collapse;
+  width: 100%;
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
+}
+
+
+.custom-table td {
+  padding: 20px 10px;
+  border-top: 3px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  width: 30%;
+  position: relative;
+  z-index: 2;
+}
+.custom-table td span{
+  position: relative;
+  z-index: 2;
+}
+
+.custom-table td img{
+  width: 29%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  filter: brightness(0.6) blur(1px);
+  z-index: 0
+}
+
+.custom-table th {
+  padding: 20px 10px;
+  text-align: center;
+  width: 30%;
+  font-size: .8rem;
+  color: white;
+}
+
+/* Wrapper che scrolla */
+.table-body-wrapper {
+  max-height: 300px;
+  /* Altezza fissa */
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* border: 1px solid rgba(255, 255, 255, 0.1); */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.ricerca {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background: rgba(89, 89, 89, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.ricerca::placeholder {
+  color: #8C2F39;
+  font-size: 0.8rem;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+/* Checkbox personalizzata */
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-img {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-image: url("/ossa-incrociate-vuote.svg"); /* immagine di default */
+  background-size: cover;
+  cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-img {
+  background-image: url("/ossa-incrociate-piene.svg"); /* immagine quando è selezionato */
 }
