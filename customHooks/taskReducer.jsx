@@ -16,7 +16,7 @@ export function taskReducer(state, action) {
                 ...state,
                 tasks: state.tasks.map(task => task.id === action.payload.id ? action.payload : task)
             }
-        case "REMOVE_MULTIPLE_TASK":
+        case "REMOVE_MULTIPLE_TASKS":
             return {
                 ...state,
                 tasks: state.tasks.filter(task => !action.payload.includes(task.id))

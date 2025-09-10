@@ -44,40 +44,40 @@ export default function EditTaskModal({ show,
 
 
     return (
-        <div>
-            <h1>{title}</h1>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        name="title"
-                        type="text"
-                        value={formData.title}
-                        onChange={handleChange}
-                    />
-                    <div></div>
-                    <select
-                        name="status"
-                        value={formData.status}
-                        onChange={handleChange}
-                    >
-                        <option value="">Seleziona</option>
-                        <option value="To do">To do</option>
-                        <option value="Doing">Doing</option>
-                        <option value="Done">Done</option>
-                    </select>
+        <div className="edit-modal">
+            <div className="modal-content">
+                <h1>{title}</h1>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            name="title"
+                            type="text"
+                            value={formData.title}
+                            onChange={handleChange}
+                        />
+                        <div></div>
+                        <select
+                            name="status"
+                            value={formData.status}
+                            onChange={handleChange}
+                        >
+                            <option value="">Seleziona</option>
+                            <option value="To do">To do</option>
+                            <option value="Doing">Doing</option>
+                            <option value="Done">Done</option>
+                        </select>
 
-                    <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                    >
-                    </textarea>
-                    <p>{confirmText}</p>
-                    <div>
-                        <button type="submit">Salva</button>
-                        <button type="button" onClick={onClose}>Annulla</button>
-                    </div>
-                </form>
+                        <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                        >
+                        </textarea>
+                        <p>{confirmText}</p>
+                        <div>
+                            <button className="btn" type="submit">Salva</button>
+                            <button className="btn" type="button" onClick={onClose}>Annulla</button>
+                        </div>
+                    </form>
             </div>
         </div>
     )

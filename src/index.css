@@ -158,7 +158,7 @@ footer {
   position: absolute;
   bottom: -20px;
   right: 20px;
-  border-width: 10px 0px 0px 10px ;
+  border-width: 10px 0px 0px 10px;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent;
 }
@@ -192,6 +192,20 @@ footer {
   transition: background-color 0.3s ease;
 }
 
+.btn {
+  background-color: #8C2F39;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 15px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-elimina {
+  margin-top: 20px;
+}
 
 
 /* HEADER */
@@ -325,13 +339,6 @@ table {
 
 
 
-
-
-
-
-
-
-
 /* Checkbox personalizzata */
 .custom-checkbox input[type="checkbox"] {
   display: none;
@@ -350,4 +357,103 @@ table {
 .custom-checkbox input[type="checkbox"]:checked+.checkbox-img {
   background-image: url("/ossa-incrociate-piene.svg");
   /* immagine quando è selezionato */
+}
+
+
+
+/* DETTAGLI */
+.impaginazione-dettagli {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+}
+
+.dettagli {
+
+  margin-top: 20px;
+  z-index: 1;
+  background: rgba(89, 89, 89, 0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 40px;
+}
+
+.dettagli p {
+  margin: 15px 0px;
+}
+
+.dettagli button {
+  margin: 0px 30px;
+}
+
+
+.edit-modal {
+  z-index: 200;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.modal-content {
+  background-color: rgba(61, 36, 108, 0.8);
+  backdrop-filter: blur(5px);
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  padding: 40px;
+  height: 70vh;
+}
+
+.modal-content h1 {
+  margin-bottom: 50px;
+}
+
+.modal-content form {
+  width: 100%;
+}
+
+.modal-content form input,
+.modal-content form select,
+.modal-content form p {
+  width: 100%;
+  margin: 10px 0px;
+  padding: 10px;
+  background-color: transparent;
+  color: #8C2F39;
+  font-size: 0.8rem;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 600;
+  font-style: normal;
+  background: rgba(89, 89, 89, 0.2);
+}
+
+.modal-content form textarea {
+  width: 100%;
+  height: 120px;
+  padding: 10px;
+  resize: none;
+  background-color: transparent;
+  color: #8C2F39;
+  font-size: 0.8rem;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 600;
+  font-style: normal;
+  background: rgba(89, 89, 89, 0.2);
+}
+
+.modal-content button {
+  margin-right: 20px;
+  z-index: 10;
 }

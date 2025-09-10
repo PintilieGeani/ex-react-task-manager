@@ -1,5 +1,6 @@
 import { useTasks } from "../context/Taskcontext.jsx"
 import React, { useEffect, useState, useMemo } from "react"
+import VillainCharacter from "../components/Characters.jsx"
 
 // Ottimizzo il render delle task con un React.memo 
 const TaskRow = React.memo(function task({ tasks, selectedTasks, onToggle }) {
@@ -20,7 +21,7 @@ const TaskRow = React.memo(function task({ tasks, selectedTasks, onToggle }) {
                             checked={isChecked}
                             onChange={() => onToggle(task.id)}
                             type="checkbox" />
-                            <span className="checkbox-img"></span>
+                        <span className="checkbox-img"></span>
                     </label>
                 </td>
             </tr>
@@ -119,6 +120,10 @@ export default function TaskList() {
 
     }
 
+    useEffect(() => {
+    console.log("TASKS STATE CAMBIATO", tasks)
+}, [tasks])
+
 
 
     return (
@@ -162,12 +167,15 @@ export default function TaskList() {
                 {
                     selectedTasks.length > 0 &&
                     <div>
-                        <button onClick={() => handleSelection(selectedTasks)}>Elimina Selezione</button>
+                        <button className="btn btn-elimina" onClick={() => handleSelection(selectedTasks)}>Elimina Selezione</button>
                     </div>
                 }
             </div >
 
-
+            <VillainCharacter
+            leftText = "Bentornato, mortale!"
+            rightText = "Come possiamo farti soffrire oggi?"
+             />
 
 
         </>

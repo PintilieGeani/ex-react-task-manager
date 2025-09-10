@@ -82,7 +82,7 @@ export const TaskProvider = ({ children }) => {
     const updateTask = async (task) => {
 
         // Controllo se esiste già il titolo escludendo se stessa.
-        const presente = state.tasks.some((elem) => elem.title.toLowerCase === task.title.toLowerCase && elem.id !== task.id)
+        const presente = state.tasks.some((elem) => elem.title.toLowerCase() === task.title.toLowerCase() && elem.id !== task.id)
         if(presente){
             alert("Esiste già una task con questo titolo")
             return

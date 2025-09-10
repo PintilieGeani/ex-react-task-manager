@@ -12,25 +12,6 @@ export default function Layout() {
                 <Outlet />
             </main>
             <AppFooter />
-
-            {/* Character in basso a destra */}
-            <div className="character-sinistra">
-                <img src="/character3.png" alt="Character sinistro" />
-
-                {<DialogBubble
-                text = "Benvenuto, mio oscuro signore!"
-                onConfirm = {() => alert("Confermato")}
-                onCancel = {() => alert("Annullato")}
-                position = "left"
-                />}
-            </div>
-            <div className="character-destra">
-                <img src="/character1.png" alt="Character destro" />
-                {<DialogBubble
-                text = "Come possiamo aiutarla?!"
-                position = "right"
-                />}
-            </div>
         </div>
     )
 }
